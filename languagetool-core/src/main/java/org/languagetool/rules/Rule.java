@@ -46,6 +46,8 @@ import org.languagetool.tagging.disambiguation.rules.DisambiguationPatternRule;
  */
 public abstract class Rule {
 
+  private static final static RuleMatch NO_MATCHES = new RuleMatch[0];
+
   protected final ResourceBundle messages;
 
   private List<CorrectExample> correctExamples = new ArrayList<>();
@@ -228,7 +230,11 @@ public abstract class Rule {
   }
 
   protected final RuleMatch[] toRuleMatchArray(List<RuleMatch> ruleMatches) {
-    return ruleMatches.toArray(new RuleMatch[ruleMatches.size()]);
+    if (ruleMatches.isEmpty()) {
+      return NO_MATCHES;
+    } else {
+      return ruleMatches.toArray(new RuleMatch[ruleMatches.size()]);
+    }
   }
 
   /**
